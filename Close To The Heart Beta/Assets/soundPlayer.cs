@@ -7,16 +7,23 @@ public class soundPlayer : MonoBehaviour
     [SerializeField]
     private AudioClip mySound;
 
+    private bool _playing = false;
     private void OnTriggerEnter(Collider collider)
     {
         Debug.Log($"Trigger Enter Called {collider.transform.tag}");
         if (collider.transform.CompareTag("Player"))
         {
-
-            AudioSource.PlayClipAtPoint(mySound, transform.position);
-            
+            if( !_playing )
+            {
+                AudioSource.PlayClipAtPoint(mySound, transform.position);
+                _playing = true;
+            }
+            else
+            {
+                mySound.Stop(); 
+                 _playing = false;
+            }  
         }
-        //mySound.Play();
     }
 }
 
