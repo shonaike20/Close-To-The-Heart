@@ -1,27 +1,39 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+[RequireComponent(typeof(AudioSource))]
 public class soundPlayer : MonoBehaviour 
  {
-    [SerializeField]
-    private AudioClip mySound;
 
-    private bool _playing = false;
+   
+    AudioSource mySound;
+
+
+    void Start()
+    {
+        mySound = GetComponent<AudioSource>();
+        //Fetch the AudioSource from the GameObject
+
+
+    }
+    //private bool _playing = false;
     private void OnTriggerEnter(Collider collider)
     {
         Debug.Log($"Trigger Enter Called {collider.transform.tag}");
         if (collider.transform.CompareTag("Player"))
         {
-            if( !_playing )
+            
+            if ( !mySound.isPlaying )
             {
-                AudioSource.PlayClipAtPoint(mySound, transform.position);
-                _playing = true;
+                mySound.Play();
+                Debug.Log("Playing");
+               //_playing = true;
             }
             else
             {
-                mySound.Stop(); 
-                 _playing = false;
+                mySound.Stop();
+                Debug.Log("Stopping");
+                 //_playing = false;
             }  
         }
     }
